@@ -125,3 +125,5 @@ async fn index(data:  web::Data<AppState>,
     let usuario = json!({"nome" : "Admin", "email": "contato@"});
     render::render_minijinja("index.html", context!(usuario) )
 }
+
+//testando git
