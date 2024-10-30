@@ -1,4 +1,4 @@
-# web-rust
+# web-rust - (pra clonar projetos iniciais)
 Setup com minijinja e actixweb Bancos de dados Postgre com SQLX
 
 ```cmd
