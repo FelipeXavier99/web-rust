@@ -33,6 +33,9 @@ jobs:
       - name: Instalar dependências Rust
         run: cargo fetch
 
+      - name: Instalar SQLx CLI
+        run: cargo install sqlx-cli --no-default-features --features postgres
+
       - name: Rodar migrações SQLx
         run: cargo sqlx migrate run
 
