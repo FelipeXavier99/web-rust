@@ -1,0 +1,40 @@
+name: Run Cargo on Commit
+
+on:
+  push:
+    branches:
+      - main  # Altere para a branch desejada
+
+jobs:
+  run-cargo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Instalar dependências do sistema
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev
+
+      - name: Restaurar cache do Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-
+
+      - name: Instalar dependências Rust
+        run: cargo fetch
+
+      - name: Rodar migrações SQLx
+        run: cargo sqlx migrate run
+
+      - name: Rodar Cargo
+        run: cargo run
